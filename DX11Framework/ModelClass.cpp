@@ -62,16 +62,16 @@ bool ModelClass::InitBuffers(ID3D11Device* device){
 		return false;
 	}
 
-	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);
+	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 10.0f);
 	vertices[0].color = XMFLOAT4(1.0f, 0.0f, 0.f, 1.0f);
 
-	vertices[1].position = XMFLOAT3(-1.0f, 1.0f, 0.0f);  // Top middle.
+	vertices[1].position = XMFLOAT3(-1.0f, 1.0f, 10.0f);  // Top middle.
 	vertices[1].color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 
-	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 10.0f);  // Bottom right.
 	vertices[2].color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 
-	vertices[3].position = XMFLOAT3(1.0f, 1.0f, 0.0f);
+	vertices[3].position = XMFLOAT3(1.0f, 1.0f, 10.0f);
 	vertices[3].color = XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 
 
