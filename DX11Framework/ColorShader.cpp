@@ -3,7 +3,7 @@
 
 using namespace std;
 using namespace DirectX;
-ColorShader::ColorShader():m_vertexShader(0), m_pixelShader(0), m_layout(0), m_matrixBuffer(0){
+ColorShader::ColorShader():m_vertexShader(nullptr), m_pixelShader(nullptr), m_layout(nullptr), m_matrixBuffer(nullptr){
 
 
 }
@@ -112,10 +112,10 @@ bool ColorShader::InitShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename,
 	}
 
 	vertexShaderBuffer->Release();
-	vertexShaderBuffer = 0;
+	vertexShaderBuffer = nullptr;
 
 	pixelShaderBuffer->Release();
-	pixelShaderBuffer = 0;
+	pixelShaderBuffer = nullptr;
 
 	matrixBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	matrixBufferDesc.ByteWidth = sizeof(MatrixBufferType);
@@ -145,27 +145,27 @@ void ColorShader::ProcessShaderError(LPCWSTR errorType, HWND hwnd, ID3D10Blob* e
 void ColorShader::ShutdownShader(){
 	if (m_matrixBuffer){
 		m_matrixBuffer->Release();
-		m_matrixBuffer = 0;
+		m_matrixBuffer = nullptr;
 	}
 	if (m_layout){
 		m_layout->Release();
-		m_layout = 0;
+		m_layout = nullptr;
 	}
 	if (m_vertexShader){
 		m_vertexShader->Release();
-		m_vertexShader = 0;
+		m_vertexShader = nullptr;
 	}
 	if (m_pixelShader)
 	{
 		m_pixelShader->Release();
-		m_pixelShader = 0;
+		m_pixelShader = nullptr;
 	}
 
 	// Release the vertex shader.
 	if (m_vertexShader)
 	{
 		m_vertexShader->Release();
-		m_vertexShader = 0;
+		m_vertexShader = nullptr;
 	}
 	return;
 }
@@ -186,7 +186,7 @@ void ColorShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, 
 	fout.close();
 
 	errorMessage->Release();
-	errorMessage = 0;
+	errorMessage = nullptr;
 
 	MessageBox(hwnd, L"Error compiling shader.  Check shader-error.txt for message.", shaderFilename, MB_OK);
 
@@ -227,8 +227,8 @@ bool ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATR
 
 void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount){
 	deviceContext->IASetInputLayout(m_layout);
-	deviceContext->VSSetShader(m_vertexShader, NULL, 0);
-	deviceContext->PSSetShader(m_pixelShader, NULL, 0);
+	deviceContext->VSSetShader(m_vertexShader, nullptr, 0);
+	deviceContext->PSSetShader(m_pixelShader, nullptr, 0);
 
 	deviceContext->DrawIndexed(indexCount, 0, 0);
 

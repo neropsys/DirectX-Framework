@@ -2,7 +2,7 @@
 
 
 using namespace DirectX;
-Graphic::Graphic():m_D3D(0), m_Camera(0), m_Model(0), m_ColorShader(0){
+Graphic::Graphic():m_D3D(nullptr), m_Camera(nullptr), m_Model(nullptr), m_ColorShader(nullptr){
 }
 
 Graphic::Graphic(const Graphic& other){}
@@ -64,26 +64,26 @@ void Graphic::ShutDown(){
 	{
 		m_ColorShader->Shutdown();
 		delete m_ColorShader;
-		m_ColorShader = 0;
+		m_ColorShader = nullptr;
 	}
 
 	if (m_Model)
 	{
 		m_Model->Shutdown();
 		delete m_Model;
-		m_Model = 0;
+		m_Model = nullptr;
 	}
 
 	if (m_Camera)
 	{
 		delete m_Camera;
-		m_Camera = 0;
+		m_Camera = nullptr;
 	}
 
 	if (m_D3D){
 		m_D3D->ShutDown();
 		delete m_D3D;
-		m_D3D = 0;
+		m_D3D = nullptr;
 	}
 	return;
 }

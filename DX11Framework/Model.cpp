@@ -1,7 +1,7 @@
 #include "Model.h"
 
 using namespace DirectX;
-Model::Model():m_vertexBuffer(0), m_indexBuffer(0){
+Model::Model():m_vertexBuffer(nullptr), m_indexBuffer(nullptr){
 
 }
 
@@ -111,10 +111,10 @@ bool Model::InitBuffers(ID3D11Device* device){
 	}
 
 	delete[] vertices;
-	vertices = 0;
+	vertices = nullptr;
 
 	delete[] indices;
-	indices = 0;
+	indices = nullptr;
 
 	return true;
 }
@@ -123,11 +123,11 @@ bool Model::InitBuffers(ID3D11Device* device){
 void Model::ShutdownBuffers(){
 	if (m_indexBuffer){
 		m_indexBuffer->Release();
-		m_indexBuffer = 0;
+		m_indexBuffer = nullptr;
 	}
 	if (m_vertexBuffer){
 		m_vertexBuffer->Release();
-		m_vertexBuffer = 0;
+		m_vertexBuffer = nullptr;
 	}
 	return;
 }

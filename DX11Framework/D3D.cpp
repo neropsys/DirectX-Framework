@@ -1,8 +1,8 @@
 #include "D3D.h"
 
 using namespace DirectX;
-D3D::D3D():m_swapChain(0), m_device(0), m_deviceContext(0), m_renderTargetView(0), m_depthStencilBuffer(0), 
-					m_depthStencilState(0), m_depthStencilView(0), m_rasterState(0){
+D3D::D3D():m_swapChain(nullptr), m_device(nullptr), m_deviceContext(nullptr), m_renderTargetView(nullptr), m_depthStencilBuffer(nullptr), 
+					m_depthStencilState(nullptr), m_depthStencilView(nullptr), m_rasterState(nullptr){
 }
 
 D3D::D3D(const D3D& other){}
@@ -89,16 +89,16 @@ bool D3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fu
 	}
 	
 	delete[] displayModeList;
-	displayModeList = 0;
+	displayModeList = nullptr;
 	
 	adapterOutput->Release();
-	adapterOutput = 0;
+	adapterOutput = nullptr;
 
 	adapter->Release();
-	adapter = 0;
+	adapter = nullptr;
 
 	factory->Release();
-	factory = 0;
+	factory = nullptr;
 
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 	
@@ -155,7 +155,7 @@ bool D3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fu
 	}
 
 	backBufferPtr->Release();
-	backBufferPtr = 0;
+	backBufferPtr = nullptr;
 
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 
@@ -264,53 +264,53 @@ bool D3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fu
 }
 void D3D::ShutDown(){
 	if (m_swapChain){
-		m_swapChain->SetFullscreenState(false, NULL);
+		m_swapChain->SetFullscreenState(false, nullptr);
 	}
 
 	if (m_rasterState){ 
 		m_rasterState->Release();
-		m_rasterState = 0;
+		m_rasterState = nullptr;
 	}
 	if (m_depthStencilView)
 	{
 		m_depthStencilView->Release();
-		m_depthStencilView = 0;
+		m_depthStencilView = nullptr;
 	}
 
 	if (m_depthStencilState)
 	{
 		m_depthStencilState->Release();
-		m_depthStencilState = 0;
+		m_depthStencilState = nullptr;
 	}
 
 	if (m_depthStencilBuffer)
 	{
 		m_depthStencilBuffer->Release();
-		m_depthStencilBuffer = 0;
+		m_depthStencilBuffer = nullptr;
 	}
 
 	if (m_renderTargetView)
 	{
 		m_renderTargetView->Release();
-		m_renderTargetView = 0;
+		m_renderTargetView = nullptr;
 	}
 
 	if (m_deviceContext)
 	{
 		m_deviceContext->Release();
-		m_deviceContext = 0;
+		m_deviceContext = nullptr;
 	}
 
 	if (m_device)
 	{
 		m_device->Release();
-		m_device = 0;
+		m_device = nullptr;
 	}
 
 	if (m_swapChain)
 	{
 		m_swapChain->Release();
-		m_swapChain = 0;
+		m_swapChain = nullptr;
 	}
 
 	return;

@@ -1,6 +1,6 @@
 #include "System.h"
 
-System::System():m_input(0), m_Graphics(0){
+System::System():m_input(nullptr), m_Graphics(nullptr){
 }
 
 System::System(const System& other){
@@ -46,12 +46,12 @@ void System::Shutdown(){
 	if (m_Graphics){
 		m_Graphics->ShutDown();
 		delete m_Graphics;
-		m_Graphics = 0;
+		m_Graphics = nullptr;
 
 	}
 	if (m_input){
 		delete m_input;
-		m_input = 0;
+		m_input = nullptr;
 	}
 	ShutdownWindows();
 }
