@@ -3,10 +3,10 @@
 
 
 #include <Windows.h>
-#include "D3DClass.h"
+#include "D3D.h"
 #include "Camera.h"
-#include "ModelClass.h"
-#include "ColorShaderClass.h"
+#include "Model.h"
+#include "ColorShader.h"
 #include <DirectXMath.h>
 
 const bool FULL_SCREEN = false;
@@ -14,11 +14,11 @@ const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = .1f;
 
-class GraphicsClass{
+class Graphic{
 public:
-	GraphicsClass();
-	~GraphicsClass();
-	GraphicsClass(const GraphicsClass&);
+	Graphic();
+	~Graphic();
+	Graphic(const Graphic&);
 
 	bool Init(int, int, HWND);
 	void ShutDown();
@@ -26,11 +26,11 @@ public:
 
 private:
 	bool Render();
-	D3DClass* m_D3D;
+	D3D* m_D3D;
 
 	Camera* m_Camera;
-	ModelClass* m_Model;
-	ColorShaderClass* m_ColorShader;
+	Model* m_Model;
+	ColorShader* m_ColorShader;
 };
 
 #endif

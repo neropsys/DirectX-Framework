@@ -1,19 +1,19 @@
-#include "GraphicClass.h"
+#include "Graphic.h"
 
 
 using namespace DirectX;
-GraphicsClass::GraphicsClass():m_D3D(0), m_Camera(0), m_Model(0), m_ColorShader(0){
+Graphic::Graphic():m_D3D(0), m_Camera(0), m_Model(0), m_ColorShader(0){
 }
 
-GraphicsClass::GraphicsClass(const GraphicsClass& other){}
+Graphic::Graphic(const Graphic& other){}
 
-GraphicsClass::~GraphicsClass(){}
+Graphic::~Graphic(){}
 
-bool GraphicsClass::Init(int screenWidth, int screenHeight, HWND hwnd){
+bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 
 	bool result;
 
-	m_D3D = new D3DClass;
+	m_D3D = new D3D;
 	if (!m_D3D) return false;
 
 	result = m_D3D->Init(screenWidth, screenHeight, VSYNC_ENABLED, hwnd, FULL_SCREEN, SCREEN_DEPTH, SCREEN_NEAR);
@@ -31,7 +31,7 @@ bool GraphicsClass::Init(int screenWidth, int screenHeight, HWND hwnd){
 
 	m_Camera->SetPos(0.f, 0.f, -10.f);
 
-	m_Model = new ModelClass;
+	m_Model = new Model;
 
 	if (!m_Model){
 		OutputDebugString(L"Failed to create model object\r\n");
@@ -44,7 +44,7 @@ bool GraphicsClass::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 	
-	m_ColorShader = new ColorShaderClass;
+	m_ColorShader = new ColorShader;
 	if (!m_ColorShader){
 		OutputDebugString(L"Failed to create colorshader object\r\n");
 		return false;
@@ -59,7 +59,7 @@ bool GraphicsClass::Init(int screenWidth, int screenHeight, HWND hwnd){
 	return true;
 }
 
-void GraphicsClass::ShutDown(){
+void Graphic::ShutDown(){
 	if (m_ColorShader)
 	{
 		m_ColorShader->Shutdown();
@@ -87,7 +87,7 @@ void GraphicsClass::ShutDown(){
 	}
 	return;
 }
-bool GraphicsClass::Frame(){
+bool Graphic::Frame(){
 	bool result;
 
 	result = Render();
@@ -99,7 +99,7 @@ bool GraphicsClass::Frame(){
 	return true;
 }
 
-bool GraphicsClass::Render(){
+bool Graphic::Render(){
 	XMMATRIX view, world, proj;
 	bool result;
 

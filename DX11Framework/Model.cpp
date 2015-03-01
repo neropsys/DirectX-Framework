@@ -1,15 +1,15 @@
-#include "ModelClass.h"
+#include "Model.h"
 
 using namespace DirectX;
-ModelClass::ModelClass():m_vertexBuffer(0), m_indexBuffer(0){
+Model::Model():m_vertexBuffer(0), m_indexBuffer(0){
 
 }
 
-ModelClass::ModelClass(const ModelClass& other){}
+Model::Model(const Model& other){}
 
-ModelClass::~ModelClass(){}
+Model::~Model(){}
 
-bool ModelClass::Init(ID3D11Device* device){
+bool Model::Init(ID3D11Device* device){
 	bool result;
 
 	result = InitBuffers(device);
@@ -23,20 +23,20 @@ bool ModelClass::Init(ID3D11Device* device){
 
 }
 
-void ModelClass::Shutdown(){
+void Model::Shutdown(){
 	ShutdownBuffers();
 }
 
-void ModelClass::Render(ID3D11DeviceContext* deviceContext){
+void Model::Render(ID3D11DeviceContext* deviceContext){
 	RenderBuffers(deviceContext);
 	return;
 }
 
-int ModelClass::GetIndexCount(){
+int Model::GetIndexCount(){
 	return m_indexCount;
 }
 
-bool ModelClass::InitBuffers(ID3D11Device* device){
+bool Model::InitBuffers(ID3D11Device* device){
 	VertexType* vertices;
 	unsigned long* indices;
 
@@ -120,7 +120,7 @@ bool ModelClass::InitBuffers(ID3D11Device* device){
 }
 
 
-void ModelClass::ShutdownBuffers(){
+void Model::ShutdownBuffers(){
 	if (m_indexBuffer){
 		m_indexBuffer->Release();
 		m_indexBuffer = 0;
@@ -131,7 +131,7 @@ void ModelClass::ShutdownBuffers(){
 	}
 	return;
 }
-void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext){
+void Model::RenderBuffers(ID3D11DeviceContext* deviceContext){
 	unsigned int stride, offset;
 
 	stride = sizeof(VertexType);

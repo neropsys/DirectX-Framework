@@ -1,11 +1,11 @@
 #ifndef _INPUTCLASS_H_
 #define _INPUTCLASS_H_
 
-class InputClass{
+class Input{
 public:
-	InputClass();
-	~InputClass();
-	InputClass(const InputClass&);
+	Input();
+	~Input();
+	Input(const Input&);
 	void Init();
 
 	void KeyDown(unsigned int);

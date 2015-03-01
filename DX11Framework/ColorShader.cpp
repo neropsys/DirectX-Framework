@@ -1,21 +1,21 @@
-#include "ColorShaderClass.h"
+#include "ColorShader.h"
 
 
 using namespace std;
 using namespace DirectX;
-ColorShaderClass::ColorShaderClass():m_vertexShader(0), m_pixelShader(0), m_layout(0), m_matrixBuffer(0){
+ColorShader::ColorShader():m_vertexShader(0), m_pixelShader(0), m_layout(0), m_matrixBuffer(0){
 
 
 }
 
-ColorShaderClass::ColorShaderClass(const ColorShaderClass& other){
+ColorShader::ColorShader(const ColorShader& other){
 }
 
-ColorShaderClass::~ColorShaderClass(){
+ColorShader::~ColorShader(){
 }
 
 
-bool ColorShaderClass::Init(ID3D11Device* device, HWND hwnd){
+bool ColorShader::Init(ID3D11Device* device, HWND hwnd){
 	bool result;
 
 	result = InitShader(device, hwnd, L"Color.vs", L"Color.ps");
@@ -29,12 +29,12 @@ bool ColorShaderClass::Init(ID3D11Device* device, HWND hwnd){
 
 }
 
-void ColorShaderClass::Shutdown(){
+void ColorShader::Shutdown(){
 	ShutdownShader();
 	return;
 }
 
-bool ColorShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX& world, XMMATRIX& view, XMMATRIX& proj){
+bool ColorShader::Render(ID3D11DeviceContext* deviceContext, int indexCount, XMMATRIX& world, XMMATRIX& view, XMMATRIX& proj){
 	bool result;
 
 	result = SetShaderParameters(deviceContext, world, view, proj);
@@ -46,7 +46,7 @@ bool ColorShaderClass::Render(ID3D11DeviceContext* deviceContext, int indexCount
 	return true;
 }
 
-bool ColorShaderClass::InitShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename, WCHAR* psFilename){
+bool ColorShader::InitShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename, WCHAR* psFilename){
 	HRESULT result;
 	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
@@ -133,7 +133,7 @@ bool ColorShaderClass::InitShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFile
 	return true;
 
 }
-void ColorShaderClass::ProcessShaderError(LPCWSTR errorType, HWND hwnd, ID3D10Blob* errorMessage, WCHAR* fileName){
+void ColorShader::ProcessShaderError(LPCWSTR errorType, HWND hwnd, ID3D10Blob* errorMessage, WCHAR* fileName){
 	if (errorMessage){
 		OutputShaderErrorMessage(errorMessage, hwnd, fileName);
 	}
@@ -142,7 +142,7 @@ void ColorShaderClass::ProcessShaderError(LPCWSTR errorType, HWND hwnd, ID3D10Bl
 	}
 	return;
 }
-void ColorShaderClass::ShutdownShader(){
+void ColorShader::ShutdownShader(){
 	if (m_matrixBuffer){
 		m_matrixBuffer->Release();
 		m_matrixBuffer = 0;
@@ -170,7 +170,7 @@ void ColorShaderClass::ShutdownShader(){
 	return;
 }
 
-void ColorShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename){
+void ColorShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename){
 	char* compileErrors;
 	unsigned long bufferSize, i;
 	ofstream fout;
@@ -193,7 +193,7 @@ void ColorShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND h
 	return;
 }
 
-bool ColorShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX& world, XMMATRIX& view, XMMATRIX& proj){
+bool ColorShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, XMMATRIX& world, XMMATRIX& view, XMMATRIX& proj){
 	HRESULT result;
 
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -225,7 +225,7 @@ bool ColorShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext, X
 	return true;
 }
 
-void ColorShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount){
+void ColorShader::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount){
 	deviceContext->IASetInputLayout(m_layout);
 	deviceContext->VSSetShader(m_vertexShader, NULL, 0);
 	deviceContext->PSSetShader(m_pixelShader, NULL, 0);

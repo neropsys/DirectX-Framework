@@ -4,16 +4,16 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 
-class ModelClass{
+class Model{
 private:
 	struct VertexType{
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT4 color;
 	};
 public:
-	ModelClass();
-	~ModelClass();
-	ModelClass(const ModelClass&);
+	Model();
+	~Model();
+	Model(const Model&);
 	
 	bool Init(ID3D11Device*);
 	void Shutdown();

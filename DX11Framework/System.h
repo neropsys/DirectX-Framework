@@ -3,14 +3,14 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
-#include "GraphicClass.h"
-#include "InputClass.h"
+#include "Graphic.h"
+#include "Input.h"
 
-class SystemClass{
+class System{
 public:
-	SystemClass();
-	SystemClass(const SystemClass&);
-	~SystemClass();
+	System();
+	System(const System&);
+	~System();
 
 	bool Init();
 	void Shutdown();
@@ -28,10 +28,10 @@ private:
 	HINSTANCE m_hinstance;
 	HWND m_hwnd;
 
-	InputClass* m_input;
-	GraphicsClass* m_Graphics;
+	Input* m_input;
+	Graphic* m_Graphics;
 };
 
 static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-static SystemClass* ApplicationHandle = 0;
+static System* ApplicationHandle = 0;
 #endif

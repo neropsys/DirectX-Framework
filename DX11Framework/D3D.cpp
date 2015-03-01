@@ -1,15 +1,15 @@
-#include "D3DClass.h"
+#include "D3D.h"
 
 using namespace DirectX;
-D3DClass::D3DClass():m_swapChain(0), m_device(0), m_deviceContext(0), m_renderTargetView(0), m_depthStencilBuffer(0), 
+D3D::D3D():m_swapChain(0), m_device(0), m_deviceContext(0), m_renderTargetView(0), m_depthStencilBuffer(0), 
 					m_depthStencilState(0), m_depthStencilView(0), m_rasterState(0){
 }
 
-D3DClass::D3DClass(const D3DClass& other){}
+D3D::D3D(const D3D& other){}
 
-D3DClass::~D3DClass(){}
+D3D::~D3D(){}
 
-bool D3DClass::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fullscreen, float screenDepth, float screenNear){
+bool D3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fullscreen, float screenDepth, float screenNear){
 
 	HRESULT result;
 	IDXGIFactory* factory;
@@ -262,7 +262,7 @@ bool D3DClass::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bo
 
 
 }
-void D3DClass::ShutDown(){
+void D3D::ShutDown(){
 	if (m_swapChain){
 		m_swapChain->SetFullscreenState(false, NULL);
 	}
@@ -316,7 +316,7 @@ void D3DClass::ShutDown(){
 	return;
 }
 
-void D3DClass::BeginScene(float red, float green, float blue, float alpha){
+void D3D::BeginScene(float red, float green, float blue, float alpha){
 	float color[4];
 
 	color[0] = red;
@@ -331,7 +331,7 @@ void D3DClass::BeginScene(float red, float green, float blue, float alpha){
 	return;
 }
 
-void D3DClass::EndScene(){
+void D3D::EndScene(){
 	if (m_vsync_enabled)
 	{
 		// Lock to screen refresh rate.
@@ -345,36 +345,36 @@ void D3DClass::EndScene(){
 
 	return;
 }
-ID3D11Device* D3DClass::GetDevice()
+ID3D11Device* D3D::GetDevice()
 {
 	return m_device;
 }
 
 
-ID3D11DeviceContext* D3DClass::GetDeviceContext()
+ID3D11DeviceContext* D3D::GetDeviceContext()
 {
 	return m_deviceContext;
 }
-void D3DClass::GetProjectionMatrix(XMMATRIX& projectionMatrix)
+void D3D::GetProjectionMatrix(XMMATRIX& projectionMatrix)
 {
 	projectionMatrix = m_projectionMatrix;
 	return;
 }
 
 
-void D3DClass::GetWorldMatrix(XMMATRIX& worldMatrix)
+void D3D::GetWorldMatrix(XMMATRIX& worldMatrix)
 {
 	worldMatrix = m_worldMatrix;
 	return;
 }
 
 
-void D3DClass::GetOrthoMatrix(XMMATRIX& orthoMatrix)
+void D3D::GetOrthoMatrix(XMMATRIX& orthoMatrix)
 {
 	orthoMatrix = m_orthoMatrix;
 	return;
 }
-void D3DClass::GetVideoCardInfo(char* cardName, int& memory)
+void D3D::GetVideoCardInfo(char* cardName, int& memory)
 {
 	strcpy_s(cardName, 128, m_videoCardDescription);
 	memory = m_videoCardMemory;

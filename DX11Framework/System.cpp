@@ -1,16 +1,16 @@
-#include "SystemClass.h"
+#include "System.h"
 
-SystemClass::SystemClass():m_input(0), m_Graphics(0){
+System::System():m_input(0), m_Graphics(0){
 }
 
-SystemClass::SystemClass(const SystemClass& other){
+System::System(const System& other){
 }
 
-SystemClass::~SystemClass(){
+System::~System(){
 
 }
 
-bool SystemClass::Init(){
+bool System::Init(){
 	int screenWidth, screenHeight;
 	bool result;
 
@@ -18,14 +18,14 @@ bool SystemClass::Init(){
 	screenHeight = 0;
 
 	InitWindows(screenWidth, screenHeight);
-	m_input = new InputClass;
+	m_input = new Input;
 	if (!m_input){ 
 		OutputDebugString(L"Failed to create Input class.\r\n");
 		return false; 
 	}
 	m_input->Init();
 
-	m_Graphics = new GraphicsClass;
+	m_Graphics = new Graphic;
 	if (!m_Graphics){
 		OutputDebugString(L"Failed to create Graphic class.\r\n ");
 		return false;
@@ -42,7 +42,7 @@ bool SystemClass::Init(){
 
 }
 
-void SystemClass::Shutdown(){
+void System::Shutdown(){
 	if (m_Graphics){
 		m_Graphics->ShutDown();
 		delete m_Graphics;
@@ -56,7 +56,7 @@ void SystemClass::Shutdown(){
 	ShutdownWindows();
 }
 
-void SystemClass::Run(){
+void System::Run(){
 	MSG msg;
 	bool done, result;
 
@@ -80,7 +80,7 @@ void SystemClass::Run(){
 
 }
 
-bool SystemClass::Frame(){
+bool System::Frame(){
 	bool result;
 	if (m_input->IsKeyDown(VK_ESCAPE))
 		return false;
@@ -94,7 +94,7 @@ bool SystemClass::Frame(){
 	return true;
 }
 
-LRESULT CALLBACK SystemClass::MessageHandler(HWND m_hwnd, UINT umsg, WPARAM wparam, LPARAM lparam){
+LRESULT CALLBACK System::MessageHandler(HWND m_hwnd, UINT umsg, WPARAM wparam, LPARAM lparam){
 	switch (umsg){
 	case WM_KEYDOWN:{
 		m_input->KeyDown((unsigned int)wparam);
@@ -112,7 +112,7 @@ LRESULT CALLBACK SystemClass::MessageHandler(HWND m_hwnd, UINT umsg, WPARAM wpar
 	}
 }
 
-void SystemClass::InitWindows(int& screenWidth, int& screenHeight){
+void System::InitWindows(int& screenWidth, int& screenHeight){
 
 	WNDCLASSEX wc;
 	DEVMODE dmScreenSettings;
@@ -182,7 +182,7 @@ void SystemClass::InitWindows(int& screenWidth, int& screenHeight){
 	return;
 }
 
-void SystemClass::ShutdownWindows(){
+void System::ShutdownWindows(){
 	ShowCursor(true);
 	if (FULL_SCREEN){
 		ChangeDisplaySettings(NULL, 0);

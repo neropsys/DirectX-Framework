@@ -10,11 +10,11 @@
 #include <DirectXMath.h>
 
 
-__declspec(align(16)) class D3DClass{
+__declspec(align(16)) class D3D{
 public:
-	D3DClass();
-	D3DClass(const D3DClass&);
-	~D3DClass();
+	D3D();
+	D3D(const D3D&);
+	~D3D();
 	
 	bool Init(int, int, bool, HWND, bool, float, float);
 	void ShutDown();

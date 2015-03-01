@@ -1,29 +1,29 @@
-#include "SystemClass.h"
+#include "System.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdShow){
-	SystemClass* System;
+	System* system;
 	bool result;
 
 
 	// Create the system object.
-	System = new SystemClass;
-	if (!System)
+	system = new System;
+	if (!system)
 	{
 		OutputDebugString(L"Failed to create systemclass.\r\n ");
 		return 0;
 	}
 
 	// Initialize and run the system object.
-	result = System->Init();
+	result = system->Init();
 	if (result)
 	{
-		System->Run();
+		system->Run();
 	}
 
 	// Shutdown and release the system object.
-	System->Shutdown();
-	delete System;
-	System = 0;
+	system->Shutdown();
+	delete system;
+	system = 0;
 
 	return 0;
 }
