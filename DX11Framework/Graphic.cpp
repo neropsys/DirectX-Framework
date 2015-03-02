@@ -29,7 +29,7 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 
-	m_Camera->SetPos(0.f, 0.f, -40.f);
+	m_Camera->SetPos(0.f, 0.f, -10.f);
 
 	m_Model = new Model;
 
