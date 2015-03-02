@@ -59,8 +59,8 @@ bool Model::InitBuffers(ID3D11Device* device){
 
 	HRESULT result;
 
-	m_vertexCount = 3;
-	m_indexCount = 3;
+	m_vertexCount = 4;
+	m_indexCount = 4;
 	vertices = new VertexType[m_vertexCount];
 
 	if (!vertices){
@@ -76,18 +76,22 @@ bool Model::InitBuffers(ID3D11Device* device){
 		return false;
 	}
 
-	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);
+	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f); //bottom left
 	vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
 
-	vertices[1].position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // Top middle.
-	vertices[1].texture = XMFLOAT2(0.5f, 0.0f);
+	vertices[1].position = XMFLOAT3(-1.0f, 1.0f, 0.0f);  // left top
+	vertices[1].texture = XMFLOAT2(0.0f, 0.0f);
 
-	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
+	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // bottom right.
 	vertices[2].texture = XMFLOAT2(1.0f, 1.0f);
 
+	vertices[3].position = XMFLOAT3(1.0f, 1.0f, 0.0f); // right top
+	vertices[3].texture = XMFLOAT2(1.0f, 0.0f);
+
 	indices[0] = 0;  // Bottom left.
-	indices[1] = 1;  // Top middle.
-	indices[2] = 2;
+	indices[1] = 1;  // Left top
+	indices[2] = 2;  // bottom right
+	indices[3] = 3;  // right top
 
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
@@ -177,7 +181,7 @@ void Model::RenderBuffers(ID3D11DeviceContext* deviceContext){
 
 	deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	return;
 
