@@ -9,21 +9,31 @@ Model::Model(const Model& other){}
 
 Model::~Model(){}
 
-bool Model::Init(ID3D11Device* device){
+bool Model::Init(ID3D11Device* device, WCHAR* textureFileName){
 	bool result;
 
 	result = InitBuffers(device);
 
 	if (!result){
-		OutputDebugString(L"failed to init vertex and index buffer. \r\n");
+		OutputDebugString(L"Failed to init vertex and index buffer. \r\n");
 		return false;
 	}
+
+	result = LoadTexture(device, textureFileName);
+
+	if (!result){
+		OutputDebugString(L"Failed to load texture from file. \r\n");
+
+		return false;
+	}
+
 
 	return true;
 
 }
 
 void Model::Shutdown(){
+	ReleaseTexture();
 	ShutdownBuffers();
 }
 
@@ -34,6 +44,10 @@ void Model::Render(ID3D11DeviceContext* deviceContext){
 
 int Model::GetIndexCount(){
 	return m_indexCount;
+}
+
+ID3D11ShaderResourceView* Model::GetTexture(){
+	return m_Texture->GetTexture();
 }
 
 bool Model::InitBuffers(ID3D11Device* device){
@@ -63,13 +77,13 @@ bool Model::InitBuffers(ID3D11Device* device){
 	}
 
 	vertices[0].position = XMFLOAT3(-1.0f, -1.0f, 0.0f);
-	vertices[0].color = XMFLOAT4(0.0f, 1.0f, 0.f, 1.0f);
+	vertices[0].texture = XMFLOAT2(0.0f, 1.0f);
 
 	vertices[1].position = XMFLOAT3(0.0f, 1.0f, 0.0f);  // Top middle.
-	vertices[1].color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
+	vertices[1].texture = XMFLOAT2(0.5f, 0.0f);
 
 	vertices[2].position = XMFLOAT3(1.0f, -1.0f, 0.0f);  // Bottom right.
-	vertices[2].color = XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
+	vertices[2].texture = XMFLOAT2(1.0f, 1.0f);
 
 	indices[0] = 0;  // Bottom left.
 	indices[1] = 1;  // Top middle.
@@ -118,8 +132,30 @@ bool Model::InitBuffers(ID3D11Device* device){
 
 	return true;
 }
+bool Model::LoadTexture(ID3D11Device* device, WCHAR* filename){
+	bool result;
+	m_Texture = new Texture;
 
+	if (!m_Texture){
+		OutputDebugString(L"Failed to create texture object \r\n");
+		return false;
+	}
+	result = m_Texture->Init(device, filename);
 
+	if (!result){
+		OutputDebugString(L"Failed to initialize texture object\r\n");
+		return false;
+	}
+	return true;
+}
+
+void Model::ReleaseTexture(){
+	if (m_Texture){
+		m_Texture->Shutdown();
+		m_Texture = nullptr;
+	}
+	return;
+}
 void Model::ShutdownBuffers(){
 	if (m_indexBuffer){
 		m_indexBuffer->Release();

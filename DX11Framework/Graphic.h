@@ -6,7 +6,7 @@
 #include "D3D.h"
 #include "Camera.h"
 #include "Model.h"
-#include "ColorShader.h"
+#include "TextureShader.h"
 #include <DirectXMath.h>
 
 const bool FULL_SCREEN = false;
@@ -30,7 +30,7 @@ private:
 
 	Camera* m_Camera;
 	Model* m_Model;
-	ColorShader* m_ColorShader;
+	TextureShader* m_TextureShader;
 };
 
 #endif

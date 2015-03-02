@@ -136,8 +136,10 @@ bool D3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fu
 
 	featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	result = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &featureLevel, 1,
-		D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, NULL, &m_deviceContext);
+	//set 4th parameter to D3D11_CREATE_DEVICE_DEBUG if you have any problem debugging the code
+
+	result = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, &featureLevel, 1,
+		D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device, nullptr, &m_deviceContext);
 	if (FAILED(result)){
 		OutputDebugString(L"Failed to create device and swapchain");
 		return false;
@@ -148,7 +150,7 @@ bool D3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, bool fu
 		return false;
 	}
 
-	result = m_device->CreateRenderTargetView(backBufferPtr, NULL, &m_renderTargetView);
+	result = m_device->CreateRenderTargetView(backBufferPtr, nullptr, &m_renderTargetView);
 	if (FAILED(result)){
 		OutputDebugString(L"Failed to create render target view with back buffer pointer.\r\n ");
 		return false;

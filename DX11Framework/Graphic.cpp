@@ -2,7 +2,7 @@
 
 
 using namespace DirectX;
-Graphic::Graphic():m_D3D(nullptr), m_Camera(nullptr), m_Model(nullptr), m_ColorShader(nullptr){
+Graphic::Graphic():m_D3D(nullptr), m_Camera(nullptr), m_Model(nullptr), m_TextureShader(nullptr){
 }
 
 Graphic::Graphic(const Graphic& other){}
@@ -38,21 +38,21 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 
-	result = m_Model->Init(m_D3D->GetDevice());
+	result = m_Model->Init(m_D3D->GetDevice(), L"seafloor.dds");
 	if (!result){
 		MessageBox(hwnd, L"Could not init the model object", L"Error", MB_OK);
 		return false;
 	}
 	
-	m_ColorShader = new ColorShader;
-	if (!m_ColorShader){
-		OutputDebugString(L"Failed to create colorshader object\r\n");
+	m_TextureShader = new TextureShader;
+	if (!m_TextureShader){
+		OutputDebugString(L"Failed to create TextureShader object\r\n");
 		return false;
 	}
 
-	result = m_ColorShader->Init(m_D3D->GetDevice(), hwnd);
+	result = m_TextureShader->Init(m_D3D->GetDevice(), hwnd);
 	if (!result){
-		MessageBox(hwnd, L"Could not init the color shader object", L"Error", MB_OK);
+		MessageBox(hwnd, L"Could not init the TextureShader object", L"Error", MB_OK);
 		return false;
 	}
 
@@ -60,11 +60,11 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 }
 
 void Graphic::ShutDown(){
-	if (m_ColorShader)
+	if (m_TextureShader)
 	{
-		m_ColorShader->Shutdown();
-		delete m_ColorShader;
-		m_ColorShader = nullptr;
+		m_TextureShader->Shutdown();
+		delete m_TextureShader;
+		m_TextureShader = nullptr;
 	}
 
 	if (m_Model)
@@ -112,7 +112,7 @@ bool Graphic::Render(){
 
 	m_Model->Render(m_D3D->GetDeviceContext());
 
-	result = m_ColorShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), world, view, proj);
+	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), world, view, proj, m_Model->GetTexture());
 
 	if (!result){
 		OutputDebugString(L"Failed to render from colorshader class\r\n");
