@@ -2,7 +2,13 @@
 
 
 using namespace DirectX;
-Graphic::Graphic():m_D3D(nullptr), m_Camera(nullptr), m_Model(nullptr), m_TextureShader(nullptr){
+Graphic::Graphic():
+m_D3D(nullptr),
+m_Camera(nullptr),
+m_Model(nullptr),
+m_TextureShader(nullptr),
+m_LightShader(nullptr),
+m_Light(nullptr){
 }
 
 Graphic::Graphic(const Graphic& other){}
@@ -44,17 +50,26 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 	
-	m_TextureShader = new TextureShader;
+	m_TextureShader = new LightShader;
 	if (!m_TextureShader){
-		OutputDebugString(L"Failed to create TextureShader object\r\n");
+		OutputDebugString(L"Failed to create LightShader object\r\n");
 		return false;
 	}
 
 	result = m_TextureShader->Init(m_D3D->GetDevice(), hwnd);
 	if (!result){
-		MessageBox(hwnd, L"Could not init the TextureShader object", L"Error", MB_OK);
+		MessageBox(hwnd, L"Could not init the LightShader object", L"Error", MB_OK);
 		return false;
 	}
+
+	m_Light = new Light;
+	if (!m_Light){
+		OutputDebugString(L"Failed to create Light object\r\n");
+		return false;
+	}
+
+	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light->SetDirection(0.0f, 0.0f, 1.0f);
 
 	return true;
 }
@@ -85,12 +100,30 @@ void Graphic::ShutDown(){
 		delete m_D3D;
 		m_D3D = nullptr;
 	}
+
+	if (m_Light){
+		delete m_Light;
+		m_Light = nullptr;
+	}
+	if (m_LightShader){
+		delete m_LightShader;
+		m_Light = nullptr;
+	}
+
 	return;
 }
 bool Graphic::Frame(){
 	bool result;
 
-	result = Render();
+	static float rotation = 0.0f;
+
+	rotation += (float)XM_PI * 0.01f;
+
+	if (rotation > 360.0f){
+		rotation -= 360.0f;
+	}
+
+	result = Render(rotation);
 	if (FAILED(result)){
 		OutputDebugString(L"Failed to render.\r\n ");
 		return false;
@@ -99,7 +132,7 @@ bool Graphic::Frame(){
 	return true;
 }
 
-bool Graphic::Render(){
+bool Graphic::Render(float rotation){
 	XMMATRIX view, world, proj;
 	bool result;
 
@@ -110,9 +143,12 @@ bool Graphic::Render(){
 	m_D3D->GetWorldMatrix(world);
 	m_D3D->GetProjectionMatrix(proj);
 
+	world = XMMatrixRotationY(rotation);
+
 	m_Model->Render(m_D3D->GetDeviceContext());
 
-	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), world, view, proj, m_Model->GetTexture());
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model->GetIndexCount(), world, view, proj, m_Model->GetTexture(),
+									m_Light->GetDirection(), m_Light->GetDiffuseColor());
 
 	if (!result){
 		OutputDebugString(L"Failed to render from colorshader class\r\n");

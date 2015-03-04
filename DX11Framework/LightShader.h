@@ -2,23 +2,28 @@
 #define _COLORSHADER_H_
 
 #pragma comment(lib, "D3DCompiler.lib")
+#pragma comment(lib, "d3d11.lib")
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include <fstream>
 #include <d3dcompiler.h>
 
-class TextureShader{
+class LightShader{
 private:
 	struct MatrixBufferType{
 		DirectX::XMMATRIX world;
 		DirectX::XMMATRIX view;
 		DirectX::XMMATRIX proj;
 	};
-
+	struct LightBufferType{
+		DirectX::XMFLOAT4 diffuseColor;
+		DirectX::XMFLOAT3 lightDirection;
+		float padding;
+	};
 public:
-	TextureShader();
-	~TextureShader();
-	TextureShader(const TextureShader&);
+	LightShader();
+	~LightShader();
+	LightShader(const LightShader&);
 
 	bool Init(ID3D11Device*, HWND);
 	void Shutdown();
@@ -26,7 +31,9 @@ public:
 		DirectX::XMMATRIX& world, 
 		DirectX::XMMATRIX& view, 
 		DirectX::XMMATRIX& proj, 
-		ID3D11ShaderResourceView*);
+		ID3D11ShaderResourceView*,
+		DirectX::XMFLOAT3 lightDirection,
+		DirectX::XMFLOAT4 diffuseColor);
 
 private:
 	bool InitShader(ID3D11Device*, HWND, WCHAR*, WCHAR*);
@@ -37,7 +44,10 @@ private:
 		DirectX::XMMATRIX& world, 
 		DirectX::XMMATRIX& view,
 		DirectX::XMMATRIX& proj, 
-		ID3D11ShaderResourceView*);
+		ID3D11ShaderResourceView*,
+		DirectX::XMFLOAT3 lightDirection,
+		DirectX::XMFLOAT4 diffuseColor
+		);
 	void RenderShader(ID3D11DeviceContext*, int);
 
 	void ProcessShaderError(LPCWSTR, HWND, ID3D10Blob*, WCHAR*);
@@ -48,6 +58,8 @@ private:
 	ID3D11Buffer* m_matrixBuffer;
 
 	ID3D11SamplerState* m_sampleState;
+
+	ID3D11Buffer* m_lightBuffer;
 };
 
 

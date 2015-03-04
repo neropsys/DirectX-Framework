@@ -6,9 +6,9 @@
 #include "D3D.h"
 #include "Camera.h"
 #include "Model.h"
-#include "TextureShader.h"
+#include "LightShader.h"
+#include "Light.h"
 #include <DirectXMath.h>
-
 const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = true;
 const float SCREEN_DEPTH = 1000.0f;
@@ -25,12 +25,15 @@ public:
 	bool Frame();
 
 private:
-	bool Render();
+	bool Render(float rotation);
 	D3D* m_D3D;
 
 	Camera* m_Camera;
 	Model* m_Model;
-	TextureShader* m_TextureShader;
+	LightShader* m_TextureShader;
+
+	LightShader* m_LightShader;
+	Light* m_Light;
 };
 
 #endif
