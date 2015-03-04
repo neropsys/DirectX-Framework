@@ -6,7 +6,6 @@ Graphic::Graphic():
 m_D3D(nullptr),
 m_Camera(nullptr),
 m_Model(nullptr),
-m_TextureShader(nullptr),
 m_LightShader(nullptr),
 m_Light(nullptr){
 }
@@ -50,13 +49,13 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 	
-	m_TextureShader = new LightShader;
-	if (!m_TextureShader){
+	m_LightShader = new LightShader;
+	if (!m_LightShader){
 		OutputDebugString(L"Failed to create LightShader object\r\n");
 		return false;
 	}
 
-	result = m_TextureShader->Init(m_D3D->GetDevice(), hwnd);
+	result = m_LightShader->Init(m_D3D->GetDevice(), hwnd);
 	if (!result){
 		MessageBox(hwnd, L"Could not init the LightShader object", L"Error", MB_OK);
 		return false;
@@ -75,11 +74,11 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 }
 
 void Graphic::ShutDown(){
-	if (m_TextureShader)
+	if (m_LightShader)
 	{
-		m_TextureShader->Shutdown();
-		delete m_TextureShader;
-		m_TextureShader = nullptr;
+		m_LightShader->Shutdown();
+		delete m_LightShader;
+		m_LightShader = nullptr;
 	}
 
 	if (m_Model)

@@ -169,10 +169,9 @@ bool LightShader::InitShader(ID3D11Device* device, HWND hwnd, WCHAR* vsFilename,
 	matrixBufferDesc.MiscFlags = 0;
 	matrixBufferDesc.StructureByteStride = 0;
 
-	result = device->CreateBuffer(&matrixBufferDesc, NULL, &m_matrixBuffer);
-
+	result = device->CreateBuffer(&matrixBufferDesc, nullptr, &m_matrixBuffer);
 	if (FAILED(result)){
-		OutputDebugString(L"Failed to reate constant buffer pointer(Matrix)\r\n");
+		OutputDebugString(L"Failed to create constant buffer pointer(Matrix)\r\n");
 		return false;
 	}
 

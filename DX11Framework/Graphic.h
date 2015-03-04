@@ -30,8 +30,6 @@ private:
 
 	Camera* m_Camera;
 	Model* m_Model;
-	LightShader* m_TextureShader;
-
 	LightShader* m_LightShader;
 	Light* m_Light;
 };
