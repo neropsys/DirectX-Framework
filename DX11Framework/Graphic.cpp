@@ -67,7 +67,7 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 
-	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light->SetDiffuseColor(1.0f, 0.0f, 1.0f, 1.0f);
 	m_Light->SetDirection(0.0f, 0.0f, 1.0f);
 
 	return true;
@@ -135,7 +135,7 @@ bool Graphic::Render(float rotation){
 	XMMATRIX view, world, proj;
 	bool result;
 
-	m_D3D->BeginScene(0.f, 0.f, 1.f, 1.f);
+	m_D3D->BeginScene(0.f, 0.f, 0.f, 1.f);
 	m_Camera->Render();
 
 	m_Camera->GetViewMatrix(view);
