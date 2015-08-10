@@ -43,7 +43,7 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 
-	result = m_Model->Init(m_D3D->GetDevice(), L"seafloor.dds");
+	result = m_Model->Init(m_D3D->GetDevice(), "cube.txt", L"seafloor.dds");
 	if (!result){
 		MessageBox(hwnd, L"Could not init the model object", L"Error", MB_OK);
 		return false;
@@ -67,7 +67,7 @@ bool Graphic::Init(int screenWidth, int screenHeight, HWND hwnd){
 		return false;
 	}
 
-	m_Light->SetDiffuseColor(1.0f, 0.0f, 1.0f, 1.0f);
+	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
 	m_Light->SetDirection(0.0f, 0.0f, 1.0f);
 
 	return true;

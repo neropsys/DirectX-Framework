@@ -10,7 +10,6 @@ m_layout(nullptr),
 m_matrixBuffer(nullptr),
 m_sampleState(nullptr), 
 m_lightBuffer(nullptr){
-
 }
 
 LightShader::LightShader(const LightShader& other){
